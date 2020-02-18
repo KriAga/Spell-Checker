@@ -12,7 +12,6 @@ spellchecker = hunspell.HunSpell(
 )
 
 words = list()
-words.clear()
 
 @app.route('/')
 def index():
@@ -43,7 +42,7 @@ def process():
         for script in soup(["script", "style"]):
             script.decompose()
         text = soup.get_text()
-
+        words.clear()
         p = re.compile(r"[^\u0900-\u097F\n]")
         for line in text.splitlines():
             cleaned = p.sub(" ", line)
