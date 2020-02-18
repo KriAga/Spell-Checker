@@ -11,7 +11,7 @@ spellchecker = hunspell.HunSpell(
     "./marathi_words_updates.oxt_FILES/dicts/mr_IN.aff",
 )
 
-
+words = list()
 
 @app.route('/')
 def index():
@@ -19,7 +19,6 @@ def index():
 
 
 def mycheck(myword):
-    words = list()
     if spellchecker.spell(myword) is False:
         try:
             word_result = {
