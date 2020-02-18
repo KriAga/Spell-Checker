@@ -19,6 +19,7 @@ def index():
 
 
 def mycheck(myword):
+    words = list()
     if spellchecker.spell(myword) is False:
         try:
             word_result = {
@@ -44,7 +45,6 @@ def process():
         text = soup.get_text()
 
         p = re.compile(r"[^\u0900-\u097F\n]")
-        words = list()
         for line in text.splitlines():
             cleaned = p.sub(" ", line)
             if cleaned.strip():
