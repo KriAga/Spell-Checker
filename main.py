@@ -39,6 +39,8 @@ def process():
         headers = requests.utils.default_headers()
         req = requests.get(url, headers)
         soup = BeautifulSoup(req.content, "html.parser")
+        for script in soup(["script", "style"]):
+            script.decompose()
         text = soup.get_text()
 
         p = re.compile(r"[^\u0900-\u097F\n]")
