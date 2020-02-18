@@ -11,7 +11,6 @@ spellchecker = hunspell.HunSpell(
     "./marathi_words_updates.oxt_FILES/dicts/mr_IN.aff",
 )
 
-del words
 words = list()
 
 @app.route('/')
