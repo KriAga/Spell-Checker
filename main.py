@@ -10,8 +10,8 @@ spellchecker = hunspell.HunSpell(
     "./marathi_words_updates.oxt_FILES/dicts/mr_IN.dic",
     "./marathi_words_updates.oxt_FILES/dicts/mr_IN.aff",
 )
-words = []
 
+words = list()
 
 @app.route('/')
 def index():
@@ -39,8 +39,10 @@ def process():
         headers = requests.utils.default_headers()
         req = requests.get(url, headers)
         soup = BeautifulSoup(req.content, "html.parser")
+        for script in soup(["script", "style"]):
+            script.decompose()
         text = soup.get_text()
-
+        words.clear()
         p = re.compile(r"[^\u0900-\u097F\n]")
         for line in text.splitlines():
             cleaned = p.sub(" ", line)
@@ -51,4 +53,4 @@ def process():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
