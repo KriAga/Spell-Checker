@@ -12,6 +12,7 @@ spellchecker = hunspell.HunSpell(
 )
 
 words = list()
+words.clear()
 
 @app.route('/')
 def index():
