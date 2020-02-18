@@ -11,7 +11,7 @@ spellchecker = hunspell.HunSpell(
     "./marathi_words_updates.oxt_FILES/dicts/mr_IN.aff",
 )
 
-words = list()
+
 
 @app.route('/')
 def index():
@@ -44,6 +44,7 @@ def process():
         text = soup.get_text()
 
         p = re.compile(r"[^\u0900-\u097F\n]")
+        words = list()
         for line in text.splitlines():
             cleaned = p.sub(" ", line)
             if cleaned.strip():
