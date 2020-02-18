@@ -10,8 +10,7 @@ spellchecker = hunspell.HunSpell(
     "./marathi_words_updates.oxt_FILES/dicts/mr_IN.dic",
     "./marathi_words_updates.oxt_FILES/dicts/mr_IN.aff",
 )
-words = []
-
+words = list()
 
 @app.route('/')
 def index():
