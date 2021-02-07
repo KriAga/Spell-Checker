@@ -3,6 +3,9 @@ from bs4 import BeautifulSoup
 import requests
 import re
 from flask import Flask, render_template, request
+import csv, nltk
+with open("en_bigram.csv") as f:
+    reader = csv.DictReader(f)
 
 app = Flask(__name__)
 
@@ -19,13 +22,26 @@ def index():
 
 
 def mycheck(myword):
-    if spellchecker.spell(myword) is False:
+    if spellchecker.spell(myword[1]) is False:
         try:
             word_result = {
-                'original_word': myword,
-                'corrected_word': spellchecker.suggest(myword)[0]
+                'original_word': myword[1],
+                'corrected_word': spellchecker.suggest(myword[1])
             }
-            words.append(word_result)
+            result = list()
+            for row in reader:
+                if row["right"] == "some_text" and row["left"].startswith("My"):
+                    result.append(row["left"])
+            list_one_updated = list()
+            for i in word_result['corrected_word']:
+                if i in result:
+                    list_one_updated.append(i)
+
+            for i in word_result['corrected_word']:
+                if i not in result:
+                    list_one_updated.append(i)
+                    
+            words.append({'original_word': myword[1], 'corrected_word': list_one_updated[0]})
             return
         except:
             pass
@@ -47,7 +63,7 @@ def process():
         for line in text.splitlines():
             cleaned = p.sub(" ", line)
             if cleaned.strip():
-                for i in cleaned.split():
+                for i in nltk.bigrams(cleaned.split()):
                     mycheck(i)
         return render_template("success.html", words=words)
 
