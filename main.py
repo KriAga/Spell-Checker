@@ -4,11 +4,9 @@ import requests
 import re
 from flask import Flask, render_template, request
 import csv, nltk
-with open("en_bigram.csv") as f:
-    reader = csv.DictReader(f)
+
 reader = csv.DictReader(open("en_bigram.csv"), delimiter = ' ')
-    
-    
+
 app = Flask(__name__)
 
 spellchecker = hunspell.HunSpell(
