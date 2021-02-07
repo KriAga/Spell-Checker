@@ -30,7 +30,7 @@ def mycheck(myword):
             }
             result = list()
             for left, right, count in reader:
-                if left == myword[0]):
+                if left == myword[0]:
                     result.append(right)
             list_one_updated = list()
             for i in word_result['corrected_word']:
