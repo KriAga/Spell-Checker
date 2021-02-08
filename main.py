@@ -5,8 +5,6 @@ import re
 from flask import Flask, render_template, request
 import csv, nltk
 
-reader = csv.DictReader(open("en_bigram.csv"), delimiter = ' ')
-
 app = Flask(__name__)
 
 spellchecker = hunspell.HunSpell(
@@ -29,8 +27,10 @@ def mycheck(myword):
                 'corrected_word': spellchecker.suggest(myword[1])
             }
             result = list()
+
+            reader = csv.reader(open("en_bigram.csv"), delimiter = ' ')
             for left, right, count in reader:
-                if left == myword[0]:
+                if left.strip() == myword[0]:
                     result.append(right)
             list_one_updated = list()
             for i in word_result['corrected_word']:
@@ -41,7 +41,7 @@ def mycheck(myword):
                 if i not in result:
                     list_one_updated.append(i)
                     
-            words.append({'original_word': myword[1], 'corrected_word': list_one_updated[0]})
+            words.append({'original_word': myword[1], 'corrected_word': (result[:10], word_result['corrected_word'], list_one_updated)})
             return
         except:
             pass
@@ -70,3 +70,4 @@ def process():
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
+
