@@ -18,6 +18,12 @@ words = list()
 def index():
     return render_template("index.html")
 
+from collections import defaultdict
+mydict = defaultdict(list)
+
+with open("en_bigram.csv", newline='') as f:
+    for row in csv.reader(f, delimiter = ' '):
+        mydict[row[0].strip()].append(row[1].strip())
 
 def mycheck(myword):
     if spellchecker.spell(myword[1]) is False:
@@ -26,16 +32,14 @@ def mycheck(myword):
                 'original_word': myword[1],
                 'corrected_word': spellchecker.suggest(myword[1])
             }
-            result = list()
-            reader = csv.reader(open("en_bigram.csv"), delimiter = ' ')
-            for left, right, count in reader:
-                if left.strip() == myword[0]:
-                    result.append(right)
-                    
+            
+            result = mydict[myword[0]]
+
             list_one_updated = list()
             for i in word_result['corrected_word']:
                 if i in result:
                     list_one_updated.append(i)
+
             for i in word_result['corrected_word']:
                 if i not in result:
                     list_one_updated.append(i)
