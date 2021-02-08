@@ -27,16 +27,15 @@ def mycheck(myword):
                 'corrected_word': spellchecker.suggest(myword[1])
             }
             result = list()
-
             reader = csv.reader(open("en_bigram.csv"), delimiter = ' ')
             for left, right, count in reader:
                 if left.strip() == myword[0]:
                     result.append(right)
+                    
             list_one_updated = list()
             for i in word_result['corrected_word']:
                 if i in result:
                     list_one_updated.append(i)
-
             for i in word_result['corrected_word']:
                 if i not in result:
                     list_one_updated.append(i)
