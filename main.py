@@ -12,6 +12,10 @@ spellchecker = hunspell.HunSpell(
     "./marathi_words_updates.oxt_FILES/dicts/mr_IN.aff",
 )
 
+spellchecker_split = hunspell.HunSpell(
+    "./marathi_words_updates.oxt_FILES/dicts/mr_IN.dic",
+    "./marathi_words_updates.oxt_FILES/dicts/mr_IN_split.aff",
+)
 words = list()
 
 @app.route('/')
@@ -26,13 +30,19 @@ with open("en_bigram.csv", newline='') as f:
         mydict[row[0].strip()].append(row[1].strip())
 
 def mycheck(myword):
-    if spellchecker.spell(myword[1]) is False:
+    if spellchecker.spell(myword[1]) is False and len(myword[1]) > 3:
         try:
-            word_result = {
-                'original_word': myword[1],
-                'corrected_word': spellchecker.suggest(myword[1])
-            }
-            
+            if len(myword[1]) > 12:
+                word_result = {
+                    'original_word': myword[1],
+                    'corrected_word': spellchecker_split.suggest(myword[1])
+                }
+            else:
+                word_result = {
+                    'original_word': myword[1],
+                    'corrected_word': spellchecker.suggest(myword[1])
+                }
+
             result = mydict[myword[0]]
 
             list_one_updated = list()
@@ -43,8 +53,8 @@ def mycheck(myword):
             for i in word_result['corrected_word']:
                 if i not in result:
                     list_one_updated.append(i)
-                    
-            words.append({'original_word': myword[1], 'corrected_word': (result[:10], word_result['corrected_word'], list_one_updated)})
+
+            words.append({'original_word': myword[1], 'corrected_word': ( list_one_updated[0])})
             return
         except:
             pass
@@ -66,6 +76,7 @@ def process():
         for line in text.splitlines():
             cleaned = p.sub(" ", line)
             if cleaned.strip():
+                mycheck(('NULL', cleaned.split()[0]))
                 for i in nltk.bigrams(cleaned.split()):
                     mycheck(i)
         return render_template("success.html", words=words)
