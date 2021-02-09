@@ -7,6 +7,13 @@ import csv, nltk
 
 app = Flask(__name__)
 
+from collections import defaultdict
+mydict = defaultdict(list)
+
+with open("marathi_bigram_count.txt", newline='') as f:
+    for row in csv.reader(f, delimiter = ' '):
+        mydict[row[0].strip()].append(row[1].strip())
+
 spellchecker = hunspell.HunSpell(
     "./marathi_words_updates.oxt_FILES/dicts/mr_IN.dic",
     "./marathi_words_updates.oxt_FILES/dicts/mr_IN.aff",
