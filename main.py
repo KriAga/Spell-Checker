@@ -54,7 +54,7 @@ def mycheck(myword):
                 if i not in result:
                     list_one_updated.append(i)
 
-            words.append({'original_word': myword[1], 'corrected_word': ( list_one_updated[0])})
+            words.append({'original_word': myword[1], 'corrected_word': list_one_updated[0]})
             return
         except:
             pass
