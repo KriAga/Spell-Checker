@@ -25,7 +25,7 @@ def index():
 from collections import defaultdict
 mydict = defaultdict(list)
 
-with open("en_bigram.csv", newline='') as f:
+with open("marathi_bigram_count.txt", newline='') as f:
     for row in csv.reader(f, delimiter = ' '):
         mydict[row[0].strip()].append(row[1].strip())
 
