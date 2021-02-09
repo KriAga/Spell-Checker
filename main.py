@@ -22,13 +22,6 @@ words = list()
 def index():
     return render_template("index.html")
 
-from collections import defaultdict
-mydict = defaultdict(list)
-
-with open("marathi_bigram_count.txt", newline='') as f:
-    for row in csv.reader(f, delimiter = ' '):
-        mydict[row[0].strip()].append(row[1].strip())
-
 def mycheck(myword):
     if spellchecker.spell(myword[1]) is False and len(myword[1]) > 3:
         try:
@@ -63,6 +56,13 @@ def mycheck(myword):
 @app.route('/process', methods=['POST', 'GET'])
 def process():
     if request.method == 'POST':
+        from collections import defaultdict
+        mydict = defaultdict(list)
+
+        with open("marathi_bigram_count.txt", newline='') as f:
+            for row in csv.reader(f, delimiter = ' '):
+                mydict[row[0].strip()].append(row[1].strip())
+                
         url = request.form['url']
         print(url)
         headers = requests.utils.default_headers()
