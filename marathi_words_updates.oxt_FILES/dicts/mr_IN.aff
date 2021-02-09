@@ -1,6 +1,8 @@
-﻿SET UTF8
+SET UTF8
 NEEDAFFIX F
 NOSUGGEST S
+
+NOSPLITSUGS
 
 SFX N Y 1
 SFX N णे 0 णे
@@ -646,3 +648,24 @@ SFX T णे लेल्यां/Abcd णे
 SFX T णे ल्या/Aacd णे
 SFX T णे 0/Fc णे
 
+TRY ािीुूृॅेैॉोौ्ंःअइईउऊऋएऐऑओऔ
+
+REP 18
+REP स श
+REP स ष
+REP श ष
+REP प फ
+REP ज झ
+REP ल ळ
+REP न ण
+REP त ट
+REP ड ढ
+REP ाे ो
+REP आे ओ
+REP आै औ
+REP अां आं
+REP आॅ ऑ
+REP ऍ ॲ
+REP अॅ ॲ
+REP ाँ ॉं
+REP ाॅं ॉं
