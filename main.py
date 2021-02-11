@@ -30,7 +30,8 @@ with open("marathi_bigram_count.txt", newline='') as f:
         mydict[row[0].strip()].append(row[1].strip())
 
 def mycheck(myword):
-    if spellchecker.spell(myword[1]) is False and len(myword[1]) > 3:
+    matches = re.findall('[१२३४५६७८९०1234567890]',  myword[1])
+    if spellchecker.spell(myword[1]) is False and len(myword[1]) > 2 and len(matches) < 1:
         try:
             if len(myword[1]) > 12:
                 word_result = {
