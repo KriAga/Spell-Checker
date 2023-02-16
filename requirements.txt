@@ -13,5 +13,5 @@ query-string==2019.4.13
 requests
 soupsieve==1.9.5
 urllib3==1.26.5
-Werkzeug==1.0.0
+Werkzeug==2.2.3
 nltk
